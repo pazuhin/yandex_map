@@ -1,7 +1,6 @@
 const div = document.querySelector('.div')
 ymaps.ready(init);
 function init(){
-    const data = [];
     const balloonLayout = ymaps.templateLayoutFactory.createClass(`
         <div class="popup">
             <div class="popup__header">
@@ -55,7 +54,6 @@ function init(){
             const reviewerCoords = document.querySelector('#review-coords');
             const reviewerList = document.querySelector('.popup__reviews-list');
             const popapHeader = document.querySelector('.popup__header').textContent;
-            const data = JSON.parse(localStorage.getItem('marks'));
 
             closeButton.addEventListener('click', (e) => {
                 this.events.fire('userclose');
