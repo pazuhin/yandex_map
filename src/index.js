@@ -1,4 +1,5 @@
 const div = document.querySelector('.div')
+
 ymaps.ready(init);
 function init(){
     const data = [];
