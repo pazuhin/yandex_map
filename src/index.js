@@ -1,6 +1,7 @@
 const div = document.querySelector('.div')
 ymaps.ready(init);
 function init(){
+    const data = [];
     const balloonLayout = ymaps.templateLayoutFactory.createClass(`
         <div class="popup">
             <div class="popup__header">
