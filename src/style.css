@@ -23,12 +23,27 @@ p {
 ul {
     list-style: none;
 }
+.add-review {
+    /* по-умолчанию для <button>, но пригодится для <a> */
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    color: #ffffff;
+    background-color: #ff8663;
+    cursor: pointer;
+}
 .popup {
     background-color: #ffffff;
     border-radius: 5px;
     width: 379px;
 }
-
+.popup__reviews-place {
+    color: grey;
+    font-weight: 100;
+}
 .popup__header {
     background-color: #ff8663;
     padding: 15px;
