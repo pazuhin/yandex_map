@@ -1,7 +1,7 @@
 const div = document.querySelector('.div')
     ymaps.ready(init);
     function init(){
-        points = JSON.parse(localStorage.getItem('marks'));
+        points = JSON.parse(localStorage.getItem('marks')) || [];
         const clasterContentLayout = ymaps.templateLayoutFactory.createClass(`
             <div class="cluster__link"><a class="search_by_address">{{ properties.address|raw }}</a></div>
             <div class="">{{ properties.name }}</div>
@@ -199,17 +199,20 @@ const div = document.querySelector('.div')
             const address = await getMapPosition(coords);
             const data = await JSON.parse(localStorage.getItem('marks'));
             const reviews = [];
-            for (const item of data) {
-                const newAddress = await getMapPosition(item.coords)
-                if (newAddress == address) {
-                    reviews.push({
-                        name: item.name,
-                        text: item.text,
-                        place: item.place,
-                        date: item.date
-                    })
+            if (data) {
+                for (const item of data) {
+                    const newAddress = await getMapPosition(item.coords)
+                    if (newAddress == address) {
+                        reviews.push({
+                            name: item.name,
+                            text: item.text,
+                            place: item.place,
+                            date: item.date
+                        })
+                    }
                 }
             }
+
             myMap.balloon.open(coords, {
                 properties: {
                     address: address,
