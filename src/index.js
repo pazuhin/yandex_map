@@ -119,7 +119,7 @@ function init(){
             const reviewerList = document.querySelector('.popup__reviews-list');
             const reviewPlace = document.querySelector('#review-place');
             const popapHeader = document.querySelector('.popup__header').textContent;
-            /
+            
             this._$element = this.getParentElement().querySelector('.popup');
             this.applyElementOffset();
 
