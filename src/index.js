@@ -54,6 +54,7 @@ function init(){
     });
     const balloonLayout = ymaps.templateLayoutFactory.createClass(`
             <div class="popup">
+                <div class="arrow"></div>
                 <div class="popup__header">
                     <i class="fas fa-map-marker-alt popup__geo"></i> {{properties.address}}
                     <div class="close">
@@ -118,9 +119,12 @@ function init(){
             const reviewerList = document.querySelector('.popup__reviews-list');
             const reviewPlace = document.querySelector('#review-place');
             const popapHeader = document.querySelector('.popup__header').textContent;
+            /
+            this._$element = this.getParentElement().querySelector('.popup');
+            this.applyElementOffset();
 
             if (this._data.properties._data && this._data.properties._data.rating) {
-                var yObjCoords = this._data.properties._data.point.toString();
+                var yObjCoords = this._data.properties._data.point.reverse().toString();
             }
 
             closeButton.addEventListener('click', (e) => {
@@ -145,7 +149,6 @@ function init(){
                     place: reviewPlace.value,
                     date: date,
                 };
-                console.log(point)
                 points.push(point);
                 localStorage.setItem('marks', JSON.stringify(points));
                 this.addMark(coordsString,popapHeader, reviewerName.value, reviewerText.value, date);
@@ -166,13 +169,39 @@ function init(){
             }, {
                 preset: 'islands#violetIcon'
             });
-            console.log(clusterer)
             clusterer.add(myPlacemark);
             myMap.geoObjects.add(clusterer);
         },
         clear: function () {
             balloonLayout.superclass.clear.call(this);
         },
+        applyElementOffset: function () {
+            Object.assign(this._$element.style, {
+                left: -(this._$element.offsetWidth / 2) + 'px',
+                top: -(this._$element.offsetHeight + this._$element.querySelector('.arrow').offsetHeight) + 'px',
+            });
+        },
+        getShape: function () {
+            if (!this._isElement(this._$element)) {
+                return balloonLayout.superclass.getShape.call(this);
+            }
+
+            var style = getComputedStyle(this._$element);
+            var position = {
+                left: parseFloat(style.left),
+                top: parseFloat(style.top),
+            };
+
+            return new ymaps.shape.Rectangle(new ymaps.geometry.pixel.Rectangle([
+                [position.left, position.top], [
+                    position.left + this._$element.offsetWidth,
+                    position.top + this._$element.offsetHeight + this._$element.querySelector('.arrow').offsetHeight
+                ]
+            ]));
+        },
+        _isElement: function (element) {
+            return element && element.querySelector('.arrow');
+        }
     });
 
     function addReview(reviewerList, point) {

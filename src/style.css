@@ -39,6 +39,16 @@ ul {
     background-color: #ffffff;
     border-radius: 5px;
     width: 379px;
+    position: absolute;
+    /*z-index: 1010;*/
+}
+.arrow {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
 }
 .popup__reviews-place {
     color: grey;
